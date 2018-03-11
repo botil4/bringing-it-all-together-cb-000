@@ -10,8 +10,11 @@ class Dog
 
   def self.create_table
     sql = <<-SQL
-      CREATE TABLE dogs (name, breed) VALUES
-      (?, ?)
+      CREATE TABLE dogs (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        breed TEXT
+      )
     SQL
 
     DB[:conn].execute(sql, self.name, self.breed)
@@ -19,6 +22,19 @@ class Dog
 
   def self.drop_table
     DB[:conn].execute("DROP TABLE IF EXISTS dogs")
+  end
+
+  def save
+    if self.id
+      self.update
+    else
+      sql = <<-SQL
+        INSERT INTO dogs (name, breed) VALUES
+        (?, ?)
+      SQL
+
+      DB[:conn].execute(sql, self.name, self.breed)
+      @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students").first
   end
 
 end
