@@ -37,4 +37,24 @@ class Dog
       @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students").first
   end
 
+  def self.create
+
+  end
+
+  def self.find_by_id(id)
+
+  end
+
+  def self.find_or_create_by
+
+  end
+
+  def self.new_from_db
+
+  end
+
+  def update
+
+  end
+
 end
